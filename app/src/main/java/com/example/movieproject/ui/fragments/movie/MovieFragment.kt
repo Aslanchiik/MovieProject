@@ -7,6 +7,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.movieproject.R
 import com.example.movieproject.base.BaseFragmentMyVersion
 import com.example.movieproject.databinding.FragmentMovieBinding
+import com.example.movieproject.newtork.NetworkIsConnect
 import com.example.movieproject.ui.adapters.MovieAdapter
 
 class MovieFragment : BaseFragmentMyVersion<FragmentMovieBinding>(R.layout.fragment_movie) {
@@ -16,11 +17,17 @@ class MovieFragment : BaseFragmentMyVersion<FragmentMovieBinding>(R.layout.fragm
 
     override fun initMV() {
 
-        viewModel.getMovies()
-        viewModel.movieList.observe(this, {
-            binding.recView.apply {
-                adapter = MovieAdapter(it, this@MovieFragment::openDetail)
-                layoutManager = GridLayoutManager(requireContext(), 2)
+        NetworkIsConnect(context ?: return).observe(viewLifecycleOwner, { isConnect ->
+            if (isConnect) {
+                viewModel.getMovies()
+                viewModel.movieList.observe(this, {
+                    binding.recView.apply {
+                        adapter = MovieAdapter(it, this@MovieFragment::openDetail)
+                        layoutManager = GridLayoutManager(requireContext(), 2)
+                    }
+                })
+            } else {
+                findNavController().navigate(R.id.noInternetFragment)
             }
         })
     }

@@ -1,6 +1,5 @@
 package com.example.movieproject.ui.fragments.detail
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -30,10 +29,13 @@ class GetDetailFragment :
                 crossfade(true)
                 crossfade(1000)
             }
-            binding.ratingStar.text = getModel.rating.toString()
+            binding.ratingStar.text = getModel.rating.average.toString()
             binding.genresOfFilm.text = getModel.genres.toString()
             binding.statusOfFilm.text = getModel.status
             binding.descriptionText.text = getModel.summary
+            binding.premierOfFilm.text = getModel.premiered
+            binding.languageOfFilm.text = getModel.language
+            binding.endedOfFilm.text = getModel.ended
         })
     }
 }

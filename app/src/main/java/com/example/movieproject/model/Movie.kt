@@ -10,6 +10,7 @@ data class Movie(
     @SerializedName("_links")
     val links: Links,
     val premiered: String = "",
+    @SerializedName("rating")
     val rating: Rating,
     val runtime: Int = 0,
     val weight: Int = 0,
